@@ -1,0 +1,104 @@
+{
+  "stages": [
+    {
+      "id": "topic",
+      "title": "① 주제설정",
+      "subtitle": "아이디어·연구질문 탐색",
+      "groups": [
+        {
+          "repos": [
+            {"repo": "stanford-oval/storm", "note": "주제를 여러 관점으로 조사해 위키식 개관을 쓴다. 낯선 주제의 지형을 빠르게 잡을 때"},
+            {"repo": "assafelovic/gpt-researcher", "note": "딥리서치 에이전트. 웹과 로컬 문서를 섞어 조사 보고서 생성"},
+            {"repo": "SakanaAI/AI-Scientist", "note": "아이디어 생성→실험→논문 자동화. 새로움 검사(novelty check) 로직이 참고할 만하다"},
+            {"repo": "langchain-ai/open_deep_research", "note": "딥리서치 레퍼런스 구현. 보관 처리돼 더는 갱신되지 않으니 코드 참고용"},
+            {"repo": "HKUDS/AI-Researcher", "note": "NeurIPS 2025. 선행연구에서 연구 아이디어를 뽑아낸다"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literature",
+      "title": "② 이론·선행연구 수집·분석",
+      "subtitle": "문헌관리·문헌 질의·체계적 문헌고찰·계량서지",
+      "groups": [
+        {
+          "repos": [
+            {"repo": "Cinnamon/kotaemon", "note": "내 PDF 묶음과 대화하는 RAG. 인용 위치를 표시한다"},
+            {"repo": "zotero/zotero", "note": "문헌관리의 표준"},
+            {"repo": "windingwind/zotero-pdf-translate", "note": "Zotero 안에서 해외 문헌 번역"},
+            {"repo": "Future-House/paper-qa", "note": "논문 전용 RAG. 인용 정확도가 강점이라 선행연구 질의응답에 맞다"},
+            {"repo": "MuiseDestiny/zotero-gpt", "note": "Zotero에 LLM 연결(요약·질의)"},
+            {"repo": "asreview/asreview", "note": "체계적 문헌고찰의 선별 작업을 능동학습으로 줄여 준다"},
+            {"repo": "massimoaria/bibliometrix", "note": "계량서지 분석(R). 스타는 적지만 이 분야 표준"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "framework",
+      "title": "③ 분석틀 설계",
+      "subtitle": "인과구조·가설·식별 조건",
+      "caveat": "이 단계는 스타가 많은 레포가 드물다. 개념 설계 작업이 코드로 잘 옮겨지지 않기 때문이다.",
+      "groups": [
+        {
+          "repos": [
+            {"repo": "py-why/dowhy", "note": "인과 가정을 그래프로 명시하고 식별 가능성·반박 검정을 확인한다. 분석틀 검증용으로 가장 추천"},
+            {"repo": "py-why/causal-learn", "note": "데이터로 인과구조를 탐색한다(탐색적 틀 설정)"},
+            {"repo": "jtextor/dagitty", "note": "DAG를 그려 통제변수 조합과 식별 조건을 도출한다. 웹판 있음"},
+            {"repo": "ChicagoHAI/hypothesis-generation", "note": "HypoGeniC. 데이터·문헌에서 LLM으로 가설 생성(연구용 코드)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "analysis",
+      "title": "④ 데이터 분석",
+      "subtitle": "정량·정성",
+      "groups": [
+        {
+          "name": "정량",
+          "repos": [
+            {"repo": "shap/shap", "note": "ML 모델 해석(변수 기여도)"},
+            {"repo": "statsmodels/statsmodels", "note": "파이썬 회귀·시계열·계량경제 기본기"},
+            {"repo": "uber/causalml", "note": "이질적 처치효과·업리프트 분석"},
+            {"repo": "py-why/EconML", "note": "DML 등 ML 기반 인과추정(Microsoft)"},
+            {"repo": "bashtage/linearmodels", "note": "패널·도구변수 회귀"},
+            {"repo": "jasp-stats/jasp-desktop", "note": "SPSS를 대신할 GUI 통계 패키지(베이지안 포함)"},
+            {"repo": "lrberge/fixest", "note": "고정효과 추정(R). 정책평가 계량의 사실상 표준"},
+            {"repo": "bcallaway11/did", "note": "다기간(staggered) 이중차분(R)"}
+          ]
+        },
+        {
+          "name": "정성",
+          "repos": [
+            {"repo": "HumanSignal/label-studio", "note": "텍스트 코딩·주석 작업(협업 가능)"},
+            {"repo": "doccano/doccano", "note": "가벼운 텍스트 라벨링"},
+            {"repo": "MaartenGr/BERTopic", "note": "토픽모델링. 정책문서·언론 분석"},
+            {"repo": "quanteda/quanteda", "note": "정치학 쪽 텍스트 계량(R)"},
+            {"repo": "bab2min/Kiwi", "note": "한국어 형태소 분석. 국문 텍스트라면 필수"},
+            {"repo": "ccbogel/QualCoder", "note": "NVivo·ATLAS.ti를 대신할 오픈소스 질적 코딩 도구"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "conclusion",
+      "title": "⑤ 결론·시사점 도출",
+      "subtitle": "결과 해석·정리·집필",
+      "caveat": "시사점을 도출하는 판단 자체를 자동화한 오픈소스는 사실상 없다. 여기 모은 것은 결과를 해석하고 정리해 글로 옮기는 도구다.",
+      "groups": [
+        {
+          "repos": [
+            {"repo": "typst/typst", "note": "LaTeX 대안 조판 시스템"},
+            {"repo": "jgm/pandoc", "note": "md→docx·pdf 변환, 인용 자동 처리"},
+            {"repo": "overleaf/overleaf", "note": "공동 LaTeX 집필"},
+            {"repo": "quarto-dev/quarto-cli", "note": "분석 코드와 본문을 한 문서에 두는 재현 가능한 보고서"},
+            {"repo": "JabRef/jabref", "note": "BibTeX 참고문헌 관리"},
+            {"repo": "vincentarelbundock/modelsummary", "note": "회귀표를 출판용으로 정리(R)"},
+            {"repo": "vincentarelbundock/marginaleffects", "note": "한계효과·예측값 해석(R). 계수를 시사점 언어로 옮기는 단계"}
+          ]
+        }
+      ]
+    }
+  ]
+}
