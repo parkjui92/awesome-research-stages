@@ -10,6 +10,7 @@ import os
 import pathlib
 import ssl
 import sys
+import time
 import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -30,8 +31,15 @@ def fetch(full_name):
     token = os.environ.get("GITHUB_TOKEN")
     if token:
         req.add_header("Authorization", f"Bearer {token}")
-    with urllib.request.urlopen(req, timeout=20, context=SSL_CTX) as r:
-        d = json.load(r)
+    for attempt in range(3):  # 일시적인 네트워크 끊김은 다시 시도한다
+        try:
+            with urllib.request.urlopen(req, timeout=20, context=SSL_CTX) as r:
+                d = json.load(r)
+            break
+        except OSError:
+            if attempt == 2:
+                raise
+            time.sleep(2 * (attempt + 1))
     return {
         "full_name": d["full_name"],
         "stars": d["stargazers_count"],
@@ -45,7 +53,7 @@ def fmt_stars(n):
 
 
 def render_table(repos, today):
-    rows = ["| 레포 | ★ | 최근 푸시 | 용도 |", "|---|---:|---|---|"]
+    rows = ["| 레포 | ★ | 최근 푸시 | 용도 | 강점 |", "|---|---:|---|---|---|"]
     for r in sorted(repos, key=lambda x: -x["stars"]):
         pushed = r["pushed"]
         age = (today - dt.date.fromisoformat(pushed)).days
@@ -56,7 +64,7 @@ def render_table(repos, today):
             flag = " 💤"
         rows.append(
             f"| [{r['full_name']}](https://github.com/{r['full_name']}) "
-            f"| {fmt_stars(r['stars'])} | {pushed}{flag} | {r['note']} |"
+            f"| {fmt_stars(r['stars'])} | {pushed}{flag} | {r['note']} | {r.get('strength', '')} |"
         )
     return "\n".join(rows)
 
@@ -82,7 +90,7 @@ def main():
                 except Exception as e:  # noqa: BLE001 — 한 레포 실패로 전체를 멈추지 않는다
                     failed.append(f"{item['repo']}: {e}")
                     continue
-                enriched.append({**meta, "note": item["note"]})
+                enriched.append({**meta, "note": item["note"], "strength": item.get("strength", "")})
                 total += 1
             if group.get("name"):
                 sec += [f"### {group['name']}", ""]
